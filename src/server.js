@@ -6,17 +6,9 @@ const fastify = require('fastify')({
 
 const { PORT } = require('./common/config');
 
-//   fastify.get('/', (req, reply) => {
-//     reply.send('Hello World!');
-//   });
-
 fastify.register(require('./resources/users/user.router'));
+fastify.register(require('./resources/boards/board.router'));
 
-// const blogRoutes = require("./router")
-
-// blogRoutes.forEach((route) => {
-//     fastify.route(route)
-// })
 
 fastify.listen(PORT, (err, address) => {
   if (err) {
