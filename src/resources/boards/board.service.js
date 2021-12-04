@@ -14,7 +14,13 @@ const createBoard = (board) => {
     id: uuidv4(),
     ...board,
   };
+  if (newBoard.columns) {
+    for (let i = 0; i < newBoard.columns.length; i += 1) {
+      newBoard.columns[i].id = uuidv4();
+    }
+  }
   boards.push(newBoard);
+  console.log('BOARDS!!!!', boards);
   return newBoard;
 };
 
@@ -34,12 +40,18 @@ const updateBoard = (id, body) => {
 };
 
 const deleteBoard = (id) => {
-    const boardToDelete = boards.find((board) => board.id === id);
+  const boardToDelete = boards.find((board) => board.id === id);
   if (!boardToDelete) {
     return;
-  } 
-      boards.splice(boards.indexOf(boardToDelete), 1);
+  }
+  boards.splice(boards.indexOf(boardToDelete), 1);
   return `Board with id ${id} was deleted successfully!`;
 };
 
-module.exports = { getAll, createBoard, getBoardById, updateBoard, deleteBoard };
+module.exports = {
+  getAll,
+  createBoard,
+  getBoardById,
+  updateBoard,
+  deleteBoard,
+};
