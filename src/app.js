@@ -21,13 +21,16 @@
 
 // app.use('/users', userRouter);
 
-const app = require('fastify')({
+const fastify = require('fastify')({
   logger: true
-})
+});
 
-app.get('/', (req, reply) => {
-  reply.send({ hello: 'world' })
-})
+fastify.get('/', (req, reply) => {
+  reply.send('Hello World!');
+});
 
 
-module.exports = app;
+
+
+
+module.exports = fastify;
