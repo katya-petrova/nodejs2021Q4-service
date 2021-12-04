@@ -1,6 +1,7 @@
 /* eslint-disable consistent-return */
 const { v4: uuidv4 } = require('uuid');
 const boards = require('./board.memory.repository');
+const tasks = require('../tasks/task.memory.repository');
 
 const getAll = () => boards;
 
@@ -20,7 +21,6 @@ const createBoard = (board) => {
     }
   }
   boards.push(newBoard);
-  console.log('BOARDS!!!!', boards);
   return newBoard;
 };
 
@@ -43,6 +43,16 @@ const deleteBoard = (id) => {
   const boardToDelete = boards.find((board) => board.id === id);
   if (!boardToDelete) {
     return;
+  }
+  const tasksToDelete = [];
+  tasks.map((task) => {
+    if (task.boardId === id) {
+      tasksToDelete.push(task);
+    }
+    return true;
+  });
+  for (let i = 0; i < tasksToDelete.length; i += 1) {
+    tasks.splice(tasks.indexOf(tasksToDelete[i]));
   }
   boards.splice(boards.indexOf(boardToDelete), 1);
   return `Board with id ${id} was deleted successfully!`;
