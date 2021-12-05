@@ -1,4 +1,3 @@
-/* eslint-disable consistent-return */
 const { v4: uuidv4 } = require('uuid');
 const users = require('./user.memory.repository');
 const tasks = require('../tasks/task.memory.repository');
@@ -25,7 +24,7 @@ const createUser = (user) => {
 const updateUser = (id, body) => {
   const userToUpdate = users.find((user) => user.id === id);
   if (!userToUpdate) {
-    return;
+    return false;
   }
   const updatedPerson = body;
   updatedPerson.id = id;
@@ -40,7 +39,7 @@ const updateUser = (id, body) => {
 const deleteUser = (id) => {
   const userToDelete = users.find((user) => user.id === id);
   if (!userToDelete) {
-    return;
+    return false;
   }
   for (let i = 0; i < tasks.length; i += 1) {
     if(tasks[i].userId === id) {
