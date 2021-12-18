@@ -1,18 +1,28 @@
+export {};
 const { v4: uuidv4 } = require('uuid');
-const users = require('./user.memory.repository');
-const tasks = require('../tasks/task.memory.repository');
+// const users = require('./user.memory.repository');
+const tasks = require('../tasks/task.service');
+
+interface IUser {
+  id: string;
+  name: string;
+  login: string;
+  password?: string;
+}
+
+const users: IUser[] = [];
 
 const getAll = () => users;
 
-const getUserById = (id) => {
+const getUserById = (id: string) => {
   const user = users.find((u) => u.id === id);
   return user;
 };
 
-const createUser = (user) => {
+const createUser = (user: IUser) => {
   const newUser = {
-    id: uuidv4(),
     ...user,
+    id: uuidv4(),
   };
   users.push(newUser);
   if (newUser.password) {
@@ -21,7 +31,7 @@ const createUser = (user) => {
   return newUser;
 };
 
-const updateUser = (id, body) => {
+const updateUser = (id: string, body: IUser) => {
   const userToUpdate = users.find((user) => user.id === id);
   if (!userToUpdate) {
     return false;
@@ -36,14 +46,14 @@ const updateUser = (id, body) => {
   return updatedPerson;
 };
 
-const deleteUser = (id) => {
+const deleteUser = (id: string) => {
   const userToDelete = users.find((user) => user.id === id);
   if (!userToDelete) {
     return false;
   }
   for (let i = 0; i < tasks.length; i += 1) {
-    if(tasks[i].userId === id) {
-      tasks[i].userId = null
+    if (tasks[i]?.userId === id) {
+      tasks[i].userId = null;
     }
   }
   users.splice(users.indexOf(userToDelete), 1);

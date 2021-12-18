@@ -3,7 +3,7 @@ const tasksService = require('./task.service');
 async function routes(fastify) {
 
   fastify.get('/boards/:boardId/tasks', async () => {
-    const result = await tasksService.getAll();
+    const result = await tasksService.getAllTasks();
     if (!result) {
       throw new Error('No tasks found');
     }

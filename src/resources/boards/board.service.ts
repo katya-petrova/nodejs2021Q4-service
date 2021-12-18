@@ -1,29 +1,56 @@
+import { ITask } from '../tasks/task.service';
+
 const { v4: uuidv4 } = require('uuid');
-const boards = require('./board.memory.repository');
-const tasks = require('../tasks/task.memory.repository');
+
+interface IColumn {
+  id: string;
+  title: string;
+  order: string | number;
+}
+
+interface IBoard {
+  id: string;
+  title: string;
+  columns: IColumn[];
+}
+
+// export interface ITask {
+//   id: string;
+//   title: string;
+//   order: number;
+//   description: string;
+//   userId: string | null;
+//   boardId: string;
+//   columnId: string | null;
+//   params: object;
+// }
+
+const boards: IBoard[] = [];
+
+const tasks = require('../tasks/task.service');
 
 const getAll = () => boards;
 
-const getBoardById = (id) => {
+const getBoardById = (id: string) => {
   const user = boards.find((b) => b.id === id);
   return user;
 };
 
-const createBoard = (board) => {
+const createBoard = (board: IBoard) => {
   const newBoard = {
-    id: uuidv4(),
     ...board,
+    id: uuidv4(),
   };
   if (newBoard.columns) {
     for (let i = 0; i < newBoard.columns.length; i += 1) {
-      newBoard.columns[i].id = uuidv4();
+      newBoard.columns[i]!.id = uuidv4();
     }
   }
   boards.push(newBoard);
   return newBoard;
 };
 
-const updateBoard = (id, body) => {
+const updateBoard = (id: string, body: IBoard) => {
   const boardToUpdate = boards.find((board) => board.id === id);
   if (!boardToUpdate) {
     return false;
@@ -38,18 +65,19 @@ const updateBoard = (id, body) => {
   return updatedBoard;
 };
 
-const deleteBoard = (id) => {
+const deleteBoard = (id: string) => {
   const boardToDelete = boards.find((board) => board.id === id);
   if (!boardToDelete) {
     return false;
   }
-  const tasksToDelete = [];
-  tasks.map((task) => {
-    if (task.boardId === id) {
-      tasksToDelete.push(task);
+  const tasksToDelete: ITask[] = [];
+
+  for (let i = 0; i < tasks.length; i++) {
+    if (tasks[i].boardId === id) {
+      tasksToDelete.push(tasks[i]);
     }
-    return true;
-  });
+  }
+
   for (let i = 0; i < tasksToDelete.length; i += 1) {
     tasks.splice(tasks.indexOf(tasksToDelete[i]));
   }

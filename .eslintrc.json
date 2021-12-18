@@ -23,6 +23,7 @@
     "prettier"
   ],
   "rules": {
+    "no-warning-comments": 0,
     "import/extensions": "off",
     "linebreak-style": "off",
     "node/no-unsupported-features/es-syntax": "off",
