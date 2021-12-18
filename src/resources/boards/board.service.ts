@@ -1,38 +1,15 @@
-import { ITask } from '../tasks/task.service';
+import { ITask } from '../tasks/task.memory.repository';
+import { IBoard } from './board.memory.repository';
 
 const { v4: uuidv4 } = require('uuid');
 
-interface IColumn {
-  id: string;
-  title: string;
-  order: string | number;
-}
-
-interface IBoard {
-  id: string;
-  title: string;
-  columns: IColumn[];
-}
-
-// export interface ITask {
-//   id: string;
-//   title: string;
-//   order: number;
-//   description: string;
-//   userId: string | null;
-//   boardId: string;
-//   columnId: string | null;
-//   params: object;
-// }
-
-const boards: IBoard[] = [];
-
-const tasks = require('../tasks/task.service');
+const tasks = require('../tasks/task.memory.repository');
+const boards = require('./board.memory.repository');
 
 const getAll = () => boards;
 
 const getBoardById = (id: string) => {
-  const user = boards.find((b) => b.id === id);
+  const user = boards.find((b: IBoard) => b.id === id);
   return user;
 };
 
@@ -51,14 +28,14 @@ const createBoard = (board: IBoard) => {
 };
 
 const updateBoard = (id: string, body: IBoard) => {
-  const boardToUpdate = boards.find((board) => board.id === id);
+  const boardToUpdate = boards.find((board: IBoard) => board.id === id);
   if (!boardToUpdate) {
     return false;
   }
   const updatedBoard = body;
   updatedBoard.id = id;
 
-  const index = boards.findIndex((board) => board.id === id);
+  const index = boards.findIndex((board: IBoard) => board.id === id);
   boards[index] = {
     ...updatedBoard,
   };
@@ -66,13 +43,15 @@ const updateBoard = (id: string, body: IBoard) => {
 };
 
 const deleteBoard = (id: string) => {
-  const boardToDelete = boards.find((board) => board.id === id);
+  const boardToDelete = boards.find((board: IBoard) => board.id === id);
   if (!boardToDelete) {
     return false;
   }
   const tasksToDelete: ITask[] = [];
+  
+  console.warn('TASKS', tasks)
 
-  for (let i = 0; i < tasks.length; i++) {
+  for (let i = 0; i < tasks.length; i += 1) {
     if (tasks[i].boardId === id) {
       tasksToDelete.push(tasks[i]);
     }
@@ -81,6 +60,7 @@ const deleteBoard = (id: string) => {
   for (let i = 0; i < tasksToDelete.length; i += 1) {
     tasks.splice(tasks.indexOf(tasksToDelete[i]));
   }
+  
   boards.splice(boards.indexOf(boardToDelete), 1);
   return `Board with id ${id} was deleted successfully!`;
 };

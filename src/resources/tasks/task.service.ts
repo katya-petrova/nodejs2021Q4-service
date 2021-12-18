@@ -1,24 +1,13 @@
+import { ITask } from "./task.memory.repository";
+
 export {};
 const { v4: uuidv4 } = require('uuid');
-// const tasks = require('./task.memory.repository');
-
-export interface ITask {
-  id: string;
-  title: string;
-  order: number;
-  description: string;
-  userId: string | null;
-  boardId: string;
-  columnId: string | null;
-  params: object;
-}
-
-const tasks: ITask[] = [];
+const tasks = require('./task.memory.repository');
 
 const getAllTasks = () => tasks;
 
 const getTaskById = (_boardId: string, taskId: string) => {
-  const task = tasks.find((t) => t.id === taskId);
+  const task = tasks.find((t: ITask) => t.id === taskId);
   return task;
 };
 
@@ -33,14 +22,14 @@ const createTask = (task: ITask, brdId: { boardId: string }) => {
 };
 
 const updateTask = (_boardId: string, taskId: string, body: ITask) => {
-  const taskToUpdate = tasks.find((task) => task.id === taskId);
+  const taskToUpdate = tasks.find((task: ITask) => task.id === taskId);
   if (!taskToUpdate) {
     return false;
   }
   const updatedTask = body;
   updatedTask.id = taskId;
 
-  const index = tasks.findIndex((task) => task.id === taskId);
+  const index = tasks.findIndex((task: ITask) => task.id === taskId);
   tasks[index] = {
     ...updatedTask,
   };
@@ -48,7 +37,7 @@ const updateTask = (_boardId: string, taskId: string, body: ITask) => {
 };
 
 const deleteTask = (_boardId: string, taskId: string) => {
-  const taskToDelete = tasks.find((task) => task.id === taskId);
+  const taskToDelete = tasks.find((task: ITask) => task.id === taskId);
   if (!taskToDelete) {
     return false;
   }

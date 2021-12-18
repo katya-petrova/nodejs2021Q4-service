@@ -1,21 +1,14 @@
+import { IUser } from "./user.memory.repository";
+
 export {};
 const { v4: uuidv4 } = require('uuid');
-// const users = require('./user.memory.repository');
-const tasks = require('../tasks/task.service');
-
-interface IUser {
-  id: string;
-  name: string;
-  login: string;
-  password?: string;
-}
-
-const users: IUser[] = [];
+const users = require('./user.memory.repository');
+const tasks = require('../tasks/task.memory.repository');
 
 const getAll = () => users;
 
 const getUserById = (id: string) => {
-  const user = users.find((u) => u.id === id);
+  const user = users.find((u: IUser) => u.id === id);
   return user;
 };
 
@@ -32,14 +25,14 @@ const createUser = (user: IUser) => {
 };
 
 const updateUser = (id: string, body: IUser) => {
-  const userToUpdate = users.find((user) => user.id === id);
+  const userToUpdate = users.find((user: IUser) => user.id === id);
   if (!userToUpdate) {
     return false;
   }
   const updatedPerson = body;
   updatedPerson.id = id;
 
-  const index = users.findIndex((user) => user.id === id);
+  const index = users.findIndex((user: IUser) => user.id === id);
   users[index] = {
     ...updatedPerson,
   };
@@ -47,7 +40,7 @@ const updateUser = (id: string, body: IUser) => {
 };
 
 const deleteUser = (id: string) => {
-  const userToDelete = users.find((user) => user.id === id);
+  const userToDelete = users.find((user: IUser) => user.id === id);
   if (!userToDelete) {
     return false;
   }

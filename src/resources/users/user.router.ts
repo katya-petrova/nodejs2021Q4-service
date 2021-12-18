@@ -14,11 +14,11 @@ async function routes(fastify: FastifyInstance) {
   });
 
   fastify.get('/users/:id', async (request: FastifyPluginOptions, reply) => {
-    const result = await usersService.getUserById(request['params'].id);
+    const result = await usersService.getUserById(request.params.id);
     if (!result) {
       reply
         .status(404)
-        .send(new Error(`User with id ${request['params'].id} not found`));
+        .send(new Error(`User with id ${request.params.id} not found`));
     }
     return result;
   });
@@ -34,23 +34,23 @@ async function routes(fastify: FastifyInstance) {
 
   fastify.put('/users/:id', async (request: FastifyPluginOptions, reply) => {
     const result = await usersService.updateUser(
-      request['params'].id,
-      request['body']
+      request.params.id,
+      request.body
     );
     if (!result) {
       reply
         .status(404)
-        .send(new Error(`User with id ${request['params'].id} not found`));
+        .send(new Error(`User with id ${request.params.id} not found`));
     }
     return result;
   });
 
   fastify.delete('/users/:id', async (request: FastifyPluginOptions, reply) => {
-    const result = await usersService.deleteUser(request['params'].id);
+    const result = await usersService.deleteUser(request.params.id);
     if (!result) {
       reply
         .status(404)
-        .send(new Error(`User with id ${request['params'].id} not found`));
+        .send(new Error(`User with id ${request.params.id} not found`));
     }
     return result;
   });
