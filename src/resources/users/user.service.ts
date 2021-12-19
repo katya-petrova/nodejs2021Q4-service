@@ -5,12 +5,30 @@ const { v4: uuidv4 } = require('uuid');
 const users = require('./user.memory.repository');
 const tasks = require('../tasks/task.memory.repository');
 
+/**
+ * returns  Array of users
+ * @returns  array of users
+ */
+
+
 const getAll = () => users;
+
+/**
+ * return  User by id
+ * @param id - user id
+ * @returns user by id
+ */
 
 const getUserById = (id: string) => {
   const user = users.find((u: IUser) => u.id === id);
   return user;
 };
+
+/**
+ * Creates new user
+ * @param user - user object
+ * @returns new user
+ */
 
 const createUser = (user: IUser) => {
   const newUser = {
@@ -23,6 +41,13 @@ const createUser = (user: IUser) => {
   }
   return newUser;
 };
+
+/**
+ * Updates user from users array
+ * @param id - user id
+ * @param body - request body with user object
+ * @returns updated user
+ */
 
 const updateUser = (id: string, body: IUser) => {
   const userToUpdate = users.find((user: IUser) => user.id === id);
@@ -38,6 +63,12 @@ const updateUser = (id: string, body: IUser) => {
   };
   return updatedPerson;
 };
+
+/**
+ * Deletes user from users array
+ * @param id - user id
+ * @returns string with deletion message or false if user was deleted unsuccessfully
+ */
 
 const deleteUser = (id: string) => {
   const userToDelete = users.find((user: IUser) => user.id === id);

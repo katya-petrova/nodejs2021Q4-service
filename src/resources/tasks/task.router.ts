@@ -2,6 +2,12 @@ import { FastifyInstance, FastifyPluginOptions } from 'fastify';
 
 const tasksService = require('./task.service');
 
+/**
+ * creates task router
+ * @param fastify - fastify
+ * @returns object depending on the method called
+ */
+
 async function routes(fastify: FastifyInstance) {
   fastify.get('/boards/:boardId/tasks', async () => {
     const result = await tasksService.getAllTasks();

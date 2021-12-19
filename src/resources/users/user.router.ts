@@ -2,6 +2,12 @@ import { FastifyInstance, FastifyPluginOptions } from 'fastify';
 
 const usersService = require('./user.service');
 
+/**
+ * creates user router
+ * @param fastify - fastify
+ * @returns object depending on the method called
+ */
+
 async function routes(fastify: FastifyInstance) {
   fastify.get('/', async () => 'Welcome to Node.js service!');
 

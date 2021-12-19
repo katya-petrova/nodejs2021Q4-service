@@ -6,12 +6,29 @@ const { v4: uuidv4 } = require('uuid');
 const tasks = require('../tasks/task.memory.repository');
 const boards = require('./board.memory.repository');
 
+/**
+ * returns  Array of boards
+ * @returns  array of boards
+ */
+
 const getAll = () => boards;
+
+/**
+ * return  Board by id
+ * @param id board id
+ * @returns board by id
+ */
 
 const getBoardById = (id: string) => {
   const user = boards.find((b: IBoard) => b.id === id);
   return user;
 };
+
+/**
+ * Creates new board
+ * @param board - board object
+ * @returns new board
+ */
 
 const createBoard = (board: IBoard) => {
   const newBoard = {
@@ -26,6 +43,13 @@ const createBoard = (board: IBoard) => {
   boards.push(newBoard);
   return newBoard;
 };
+
+/**
+ * Updates board from boards array
+ * @param id board id
+ * @param body - request body
+ * @returns updated board
+ */
 
 const updateBoard = (id: string, body: IBoard) => {
   const boardToUpdate = boards.find((board: IBoard) => board.id === id);
@@ -42,14 +66,18 @@ const updateBoard = (id: string, body: IBoard) => {
   return updatedBoard;
 };
 
+/**
+ * Deletes board from boards array
+ * @param id - board id
+ * @returns string with deletion message or false if board was deleted unsuccessfully
+ */
+
 const deleteBoard = (id: string) => {
   const boardToDelete = boards.find((board: IBoard) => board.id === id);
   if (!boardToDelete) {
     return false;
   }
   const tasksToDelete: ITask[] = [];
-  
-  console.warn('TASKS', tasks)
 
   for (let i = 0; i < tasks.length; i += 1) {
     if (tasks[i].boardId === id) {

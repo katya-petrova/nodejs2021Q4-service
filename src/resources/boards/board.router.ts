@@ -3,6 +3,12 @@ import { FastifyInstance , FastifyPluginOptions } from 'fastify';
 
 const boardsService = require('./board.service');
 
+/**
+ * creates board router
+ * @param fastify - fastify
+ * @returns object depending on the method called
+ */
+
 async function routes(fastify: FastifyInstance) {
   fastify.get('/boards', async () => {
     const result = await boardsService.getAll();
