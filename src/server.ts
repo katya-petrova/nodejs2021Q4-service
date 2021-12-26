@@ -1,4 +1,8 @@
-import { app } from './logger';
+import { logger } from './logger';
+
+const app = require('fastify')({
+  logger: { logger },
+});
 
 const { PORT } = require('./common/config');
 
@@ -7,11 +11,11 @@ app.register(require('./resources/boards/board.router'));
 app.register(require('./resources/tasks/task.router'));
 
 /**
- * createы server
+ * creates server
  * @returns Promise<void>
  */
 
-app.listen(PORT, (err) => {
+app.listen(PORT, (err: string) => {
   if (err) {
     app.log.error(err);
     process.exit(1);

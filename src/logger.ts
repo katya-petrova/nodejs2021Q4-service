@@ -1,23 +1,21 @@
-import { fastify, FastifyReply, FastifyRequest } from 'fastify';
+import { TransportMultiOptions, Logger, pino } from 'pino';
 
-export const app = fastify({
-  logger: {
-    level: 'info', 
-    prettyPrint: {
-      colorize: true, 
-      levelFirst: true,
-      translateTime: 'yyyy-dd-mm, h:MM:ss TT',
+const transport = pino.transport(<TransportMultiOptions>{
+  targets: [
+    {
+      target: 'pino/file',
+      level: 'error',
+      options: { destination: './logs/error.txt', mkdir: true, colorize: true },
     },
-
-    file: './log/logging.txt', 
-  },
+    {
+      target: 'pino/file',
+      level: 'info',
+      options: { destination: './logs/logging.txt', mkdir: true, colorize: true,  translateTime: 'yyyy-dd-mm, h:MM:ss TT', },
+    },
+  ],
 });
 
-app.addHook('preHandler', async (req: FastifyRequest, reply: FastifyReply) => {
-  if (req.body) {
-    req.log.info({ body: req.body, params: req.params }, 'parsed body');
-    reply.log.info({ body: req.body }, 'parsed body');
-  }
-});
+export const logger: Logger = pino(transport);
 
-export default app;
+
+export default logger;
