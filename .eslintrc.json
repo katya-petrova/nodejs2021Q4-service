@@ -1,5 +1,9 @@
 {
   "root": true,
+  "parser": "@typescript-eslint/parser",
+  "plugins": [
+    "@typescript-eslint"
+  ],
   "env": {
     "es2020": true,
     "jasmine": true,
@@ -14,19 +18,34 @@
     }
   },
   "settings": {
+    "import/resolver": {
+      "node": {
+        "resolvePaths": ["node_modules/@types"],
+        "extensions": [".js", ".jsx", ".ts", ".tsx"],
+        "tryExtensions": [".js", ".json", ".node", ".ts", ".d.ts"]
+      }
+    },
     "noInlineConfig": true
   },
   "extends": [
     "eslint:recommended",
     "plugin:node/recommended",
     "airbnb-base",
-    "prettier"
+    "prettier",
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended"
   ],
   "rules": {
+     "node/no-missing-import": "off",
+     "node/no-missing-require": "off",
+     "import/no-import-module-exports": "off",
     "import/extensions": "off",
     "linebreak-style": "off",
     "node/no-unsupported-features/es-syntax": "off",
     "no-underscore-dangle": "off",
-    "import/prefer-default-export": "off"
+    "import/prefer-default-export": "off",
+    "@typescript-eslint/no-explicit-any": 2,
+    "@typescript-eslint/no-var-requires": 0
   }
 }
