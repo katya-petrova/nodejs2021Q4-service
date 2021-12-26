@@ -20,6 +20,7 @@ async function routes(fastify: FastifyInstance) {
   });
 
   fastify.get('/users/:id', async (request: FastifyPluginOptions, reply) => {
+    request.log.info('Some info about the current request')
     const result = await usersService.getUserById(request.params.id);
     if (!result) {
       reply
