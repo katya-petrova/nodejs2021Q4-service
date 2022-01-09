@@ -1,5 +1,31 @@
 # RS School REST service
 
+## Docker
+
+```
+Install Docker app on your machine.
+```
+
+## Before starting the app run the following commands:
+
+```
+git clone {repository URL}
+```
+
+```
+git checkout docker
+```
+
+```
+npm install
+```
+
+## To start the aplication and postgres use the command
+
+```
+docker-compose up
+```
+
 ## Prerequisites
 
 - Git - [Download & Install Git](https://git-scm.com/downloads).
