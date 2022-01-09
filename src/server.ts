@@ -15,11 +15,10 @@ app.register(require('./resources/tasks/task.router'));
  * @returns Promise<void>
  */
 
-app.listen(PORT, (err: string) => {
+app.listen(PORT, '0.0.0.0', (err: string) => {
   if (err) {
     app.log.error(err);
     process.exit(1);
   }
   app.log.info(`server listening on port ${PORT}`);
 });
-
